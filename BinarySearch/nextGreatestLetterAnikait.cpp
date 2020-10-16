@@ -8,7 +8,7 @@ char nextGreatestLetter(const std::vector<char> &letters, char target) {
     int mid = low + (high - low) / 2;
 
     if (letters[mid] <= target) {
-      low = mid + 1
+      low = mid + 1;
     } else {
       high = mid - 1;
     }
