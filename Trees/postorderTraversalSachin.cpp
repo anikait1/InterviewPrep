@@ -14,18 +14,24 @@ struct TreeNode {
   }
 };
 
-void postOrder(vector<int> &vec, TreeNode* root) {
-    if(root != nullptr) {
-        postOrder(vec, root->left);
-        postOrder(vec, root->right);
-        vec.push_back(root->val);
-    }
-}
-    
 vector<int> postorderTraversal(TreeNode* root) {
-    vector<int> vec;
-    postOrder(vec, root);
-    return vec;
+    if(root == nullptr)
+        return {};
+  
+    stack<TreeNode*> stk;
+    vector<int> out;
+    stk.push(root);
+    while(!stk.empty()) {
+        TreeNode* temp = stk.top();
+        stk.pop();
+        out.push_back(temp->val);
+        if(temp->left != nullptr)
+            stk.push(temp->left);
+        if(temp->right != nullptr)
+            stk.push(temp->right);
+    }
+    reverse(out.begin(), out.end());
+    return out;
 }
 
 int main()
