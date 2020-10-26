@@ -1,0 +1,36 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+std::vector<std::vector<int>> merge(std::vector<std::vector<int>> &intervals) {
+  if (intervals.size() < 2) {
+    return intervals;
+  }
+
+  std::sort(intervals.begin(), intervals.end());
+  std::vector<std::vector<int>> mergedIntervals;
+
+  int from = intervals[0][0];
+  int to = intervals[0][1];
+
+  for (int i = 1; i < intervals.size(); ++i) {
+    if (to >= intervals[i][0]) {
+      to = std::max(intervals[i][1], to);
+    } else {
+      mergedIntervals.push_back(std::vector<int>{from, to});
+      from = intervals[i][0];
+      to = intervals[i][1];
+    }
+  }
+
+  mergedIntervals.push_back(std::vector<int>{from, to});
+
+  return mergedIntervals;
+}
+
+int main()
+{
+  std::vector<std::vector<int>> vec{{1, 3}, {2, 6}, {8, 10}, {15, 18}};
+  auto merged = merge(vec);
+  return 0;
+}
