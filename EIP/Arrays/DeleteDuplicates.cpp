@@ -29,6 +29,21 @@ int DeleteDuplicates(std::vector<int>* A_ptr) {
     return write_index;
 }
 
+int VariantRemoveGivenKey(std::vector<int>* A_ptr, int key) {
+    std::vector<int>& A = *A_ptr;
+
+    int write_index = 0;
+    for (int i = 0; i < A.size(); ++i) {
+        if (A[i] != key) {
+            A[write_index++] = A[i];
+        }
+    }
+
+    return write_index;
+}
+
+int VariantRemoveDuplicates2(std::vector<int>* A_ptr);
+
 int main() {
 
     return 0;
