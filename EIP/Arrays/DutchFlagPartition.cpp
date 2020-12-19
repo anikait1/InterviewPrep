@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 
+typedef enum { RED, WHITE, BLUE } Color;
+
 template<typename T>
 void display(const std::vector<T>& vec) {
     std::cout << "[ ";
@@ -10,10 +12,8 @@ void display(const std::vector<T>& vec) {
     std::cout << "]\n";
 }
 
-typedef enum { RED, WHITE, BLUE } Color;
-
-void DutchFlagPartition(int pivot_index, std::vector<int>* A_ptr) {
-    std::vector<int>& A = *A_ptr;
+void DutchFlagPartition(int pivot_index, std::vector<int>& A_ptr) {
+    std::vector<int>& A = A_ptr;
     int pivot = A[pivot_index];
 
     // elements smaller than pivot to the start
@@ -35,19 +35,30 @@ void DutchFlagPartition(int pivot_index, std::vector<int>* A_ptr) {
     display(A);
 }
 
-// [1, 0, 1, 2, 1, 0, 2, 1, 2, 1]
-// [0, 0, 1, 2, 1, 1, 2, ]
+void DutchFlagPartition(int pivot_index, std::vector<Color>* A_ptr) {
+    std::vector<Color>& A = *A_ptr;
+    Color pivot = A[pivot_index];
+    int smaller = 0, equal = 0, larger = A.size();
 
-void DutchFlagPartition(int pivot_index, std::vector<int>* A_ptr) {
-    std::vector<int>& A = *A_ptr;
-    int pivot = A[pivot_index];
+    while (equal < larger) {
+        if (A[equal] < pivot) {
+            std::swap(A[equal++], A[smaller++]);
+        } else if (A[equal] == pivot) {
+            equal++;
+        } else {
+            std::swap(A[equal], A[--larger]);
+        }
+    }
 
+    display(A);
 }
 
 
 int main() {
-    std::vector<int> A{1, 0, 1, 2, 1, 0, 2, 1, 2, 1};
-    DutchFlagPartition(0, &A);
+    std::vector<int> A{1, 1, 0, 1, 0, 2, 1, 0, 1, 1, 2, 2, 0, 1};
+    std::vector<Color> C{WHITE, BLUE, RED, BLUE, RED, WHITE, RED, WHITE, BLUE, BLUE, RED, RED, BLUE, WHITE};
+
+    DutchFlagPartition(0, &C);
 
     return 0;
 }
