@@ -42,7 +42,23 @@ int VariantRemoveGivenKey(std::vector<int>* A_ptr, int key) {
     return write_index;
 }
 
-int VariantRemoveDuplicates2(std::vector<int>* A_ptr);
+int VariantRemoveDuplicates2(std::vector<int>* A_ptr) {
+    std::vector<int>& A = *A_ptr;
+
+    if (A.empty()) {
+        return 0;
+    }
+
+    int slow = 2;
+    for (int fast = 2; fast < A.size(); ++fast) {
+        if (A[slow - 2] != A[fast]) {
+            A[slow++] = A[fast];
+        }
+    }
+
+    return slow;
+}
+
 
 int main() {
 
