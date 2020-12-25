@@ -43,6 +43,28 @@ ListNode<int>* RemoveDuplicates(ListNode<int>* node) {
     return dummy_head->next;
 }
 
+// [1 1 1 2 3 4 5 5 6] -> [2 3 4 6]
+ListNode<int>* OnlyDistinct(ListNode<int>* node) {
+    ListNode<int>* dummy_head = new ListNode<int>(0);
+    dummy_head->next = node;
+    ListNode<int>* prev = dummy_head;
+
+    while (node) {
+        if (node->next && node->data == node->next->data) {
+            while (node->next && node->data == node->next->data) {
+                node = node->next;
+            }
+            prev->next = node->next;
+        } else {
+            prev = prev->next;
+        }
+
+        node = node->next;
+    }
+
+    return dummy_head->next;
+}
+
 int main() {
     ListNode<int>* node = new ListNode<int>(1);
     node->next = new ListNode<int>(1);
@@ -50,9 +72,11 @@ int main() {
     node->next->next->next = new ListNode<int>(2);
     node->next->next->next->next = new ListNode<int>(3);
     node->next->next->next->next->next = new ListNode<int>(3);
+    node->next->next->next->next->next->next = new ListNode<int>(4);
 
     display(node);
-    display(RemoveDuplicates(node));
+    node = OnlyDistinct(node);
+    display(node);
 
 
 
