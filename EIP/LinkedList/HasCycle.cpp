@@ -39,20 +39,65 @@ bool HasCycle(ListNode<int>* node) {
     return false;
 }
 
-bool HasCycleLoop(ListNode<int>* node) {
+ListNode<int>* DetectLoop(ListNode<int>* node) {
     ListNode<int>* slow = node;
     ListNode<int>* fast = node;
+    bool hasCycle = false;
 
     while (fast && fast->next) {
         slow = slow->next;
         fast = fast->next->next;
 
         if (slow == fast) {
-            return true;
+            hasCycle = true;
+            break;
         }
     }
 
-    return false;
+    if (hasCycle) {
+        fast = node;
+        while (slow != fast) {
+            slow = slow->next;
+            fast = fast->next;
+        }
+
+        return fast;
+    } else {
+        return nullptr;
+    }
+}
+
+int CycleLength(ListNode<int>* node) {
+    ListNode<int>* startCycle = DetectLoop(node);
+
+    if (startCycle) {
+        ListNode<int>* trav = startCycle;
+        int length = 1;
+
+        while (trav->next != startCycle) {
+            ++length;
+            trav = trav->next;
+        }
+
+        return length;
+    } else {
+        return 0;
+    }
+}
+
+void RemoveCycle(ListNode<int>* node) {
+    ListNode<int>* startCycle = DetectLoop(node);
+
+    if (startCycle) {
+        ListNode<int>* trav = startCycle;
+
+        while (trav->next != startCycle) {
+            trav = trav->next;
+        }
+        trav->next = nullptr;
+    } else {
+        return;
+    }
 }
 
 int main() {
