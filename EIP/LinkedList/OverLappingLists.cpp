@@ -44,6 +44,35 @@ bool IsOverlappingNodes(ListNode<int>* L1, ListNode<int>* L2) {
     return false;
 }
 
+ListNode<int>* OverLappingNodes(ListNode<int>* L1, ListNode<int>* L2) {
+    int len_L1 = Length(L1);
+    int len_L2 = Length(L2);
+
+    AdvanceListByK(std::abs(len_L1 - len_L2), len_L1 > len_L2 ? &L1 : &L2);
+
+    while (L1 && L2 && L1 != L2) {
+        L1 = L1->next;
+        L2 = L2->next;
+    }
+
+    return L1;
+}
+
+void AdvanceListByK(int k, ListNode<int>** L1) {
+    while (k--) {
+        *L1 = (*L1)->next;
+    }
+}
+
+int Length(ListNode<int>* node) {
+    int len = 0;
+    while (node) {
+        node = node->next;
+        ++len;
+    }
+    return len;
+}
+
 int main() {
 
     return 0;
