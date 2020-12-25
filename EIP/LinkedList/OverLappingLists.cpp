@@ -23,7 +23,7 @@ void display(ListNode<T>* node) {
     std::cout << "]\n";
 }
 
-ListNode<int>* OverlappingNodes(ListNode<int>* L1, ListNode<int>* L2) {
+bool IsOverlappingNodes(ListNode<int>* L1, ListNode<int>* L2) {
     std::unordered_set<ListNode<int>*> nodes;
 
     while (L1) {
@@ -33,7 +33,7 @@ ListNode<int>* OverlappingNodes(ListNode<int>* L1, ListNode<int>* L2) {
 
     while (L2) {
         if (nodes.find(L2) != nodes.end()) {
-            return L2;
+            return true;
         } else {
             nodes.insert(L2);
         }
@@ -41,7 +41,7 @@ ListNode<int>* OverlappingNodes(ListNode<int>* L1, ListNode<int>* L2) {
         L2 = L2->next;
     }
 
-    return nullptr;
+    return false;
 }
 
 int main() {
